@@ -1,0 +1,105 @@
+07:15:03 **** Build of configuration debug for project sdcard_polling_twrk60d100m ****
+make -k -j4 all 
+Building file: C:/Users/majkl/Downloads/SDK2/devices/MK60D10/gcc/startup_MK60D10.S
+Building file: C:/Users/majkl/Downloads/SDK2/devices/MK60D10/utilities/fsl_debug_console.c
+Building file: C:/Users/majkl/Downloads/SDK2/boards/twrk60d100m/driver_examples/sdcard/polling/sdcard_polling.c
+Building file: C:/Users/majkl/Downloads/SDK2/devices/MK60D10/system_MK60D10.c
+Invoking: Cross ARM GNU Assembler
+Invoking: Cross ARM C Compiler
+Invoking: Cross ARM C Compiler
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -ffreestanding -fno-builtin -Wall  -g -DDEBUG -DCPU_MK60DN512VMD10 -DTWR_K60D100M -DTOWER -I../../../../../../../CMSIS/Include -I../../../../../../../devices -I../.. -I../../../../../../../middleware/sdmmc_2.1.2/inc -I../../../../../../../middleware/sdmmc_2.1.2/src -I../../../../../../../middleware/sdmmc_2.1.2/port -I../../../../.. -I../../../../../../../devices/MK60D10/drivers -I../../../../../../../devices/MK60D10/utilities -I../../../../../../../devices/MK60D10 -std=gnu99 -mapcs -MMD -MP -MF"utilities/fsl_debug_console.d" -MT"utilities/fsl_debug_console.o" -c -o "utilities/fsl_debug_console.o" "C:/Users/majkl/Downloads/SDK2/devices/MK60D10/utilities/fsl_debug_console.c"
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -ffreestanding -fno-builtin -Wall  -g -x assembler-with-cpp -DDEBUG -D__STARTUP_CLEAR_BSS -mapcs -MMD -MP -MF"startup/startup_MK60D10.d" -MT"startup/startup_MK60D10.o" -c -o "startup/startup_MK60D10.o" "C:/Users/majkl/Downloads/SDK2/devices/MK60D10/gcc/startup_MK60D10.S"
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -ffreestanding -fno-builtin -Wall  -g -DDEBUG -DCPU_MK60DN512VMD10 -DTWR_K60D100M -DTOWER -I../../../../../../../CMSIS/Include -I../../../../../../../devices -I../.. -I../../../../../../../middleware/sdmmc_2.1.2/inc -I../../../../../../../middleware/sdmmc_2.1.2/src -I../../../../../../../middleware/sdmmc_2.1.2/port -I../../../../.. -I../../../../../../../devices/MK60D10/drivers -I../../../../../../../devices/MK60D10/utilities -I../../../../../../../devices/MK60D10 -std=gnu99 -mapcs -MMD -MP -MF"source/sdcard_polling.d" -MT"source/sdcard_polling.o" -c -o "source/sdcard_polling.o" "C:/Users/majkl/Downloads/SDK2/boards/twrk60d100m/driver_examples/sdcard/polling/sdcard_polling.c"
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -ffreestanding -fno-builtin -Wall  -g -DDEBUG -DCPU_MK60DN512VMD10 -DTWR_K60D100M -DTOWER -I../../../../../../../CMSIS/Include -I../../../../../../../devices -I../.. -I../../../../../../../middleware/sdmmc_2.1.2/inc -I../../../../../../../middleware/sdmmc_2.1.2/src -I../../../../../../../middleware/sdmmc_2.1.2/port -I../../../../.. -I../../../../../../../devices/MK60D10/drivers -I../../../../../../../devices/MK60D10/utilities -I../../../../../../../devices/MK60D10 -std=gnu99 -mapcs -MMD -MP -MF"startup/system_MK60D10.d" -MT"startup/system_MK60D10.o" -c -o "startup/system_MK60D10.o" "C:/Users/majkl/Downloads/SDK2/devices/MK60D10/system_MK60D10.c"
+Finished building: C:/Users/majkl/Downloads/SDK2/devices/MK60D10/gcc/startup_MK60D10.S
+ 
+Finished building: C:/Users/majkl/Downloads/SDK2/devices/MK60D10/system_MK60D10.c
+Building file: C:/Users/majkl/Downloads/SDK2/middleware/sdmmc_2.1.2/src/fsl_sd.c
+ 
+Invoking: Cross ARM C Compiler
+Finished building: C:/Users/majkl/Downloads/SDK2/boards/twrk60d100m/driver_examples/sdcard/polling/sdcard_polling.c
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -ffreestanding -fno-builtin -Wall  -g -DDEBUG -DCPU_MK60DN512VMD10 -DTWR_K60D100M -DTOWER -I../../../../../../../CMSIS/Include -I../../../../../../../devices -I../.. -I../../../../../../../middleware/sdmmc_2.1.2/inc -I../../../../../../../middleware/sdmmc_2.1.2/src -I../../../../../../../middleware/sdmmc_2.1.2/port -I../../../../.. -I../../../../../../../devices/MK60D10/drivers -I../../../../../../../devices/MK60D10/utilities -I../../../../../../../devices/MK60D10 -std=gnu99 -mapcs -MMD -MP -MF"sdmmc/src/fsl_sd.d" -MT"sdmmc/src/fsl_sd.o" -c -o "sdmmc/src/fsl_sd.o" "C:/Users/majkl/Downloads/SDK2/middleware/sdmmc_2.1.2/src/fsl_sd.c"
+ 
+Building file: C:/Users/majkl/Downloads/SDK2/middleware/sdmmc_2.1.2/src/fsl_sdmmc.c
+Building file: C:/Users/majkl/Downloads/SDK2/boards/twrk60d100m/driver_examples/sdcard/polling/event.c
+Invoking: Cross ARM C Compiler
+Finished building: C:/Users/majkl/Downloads/SDK2/devices/MK60D10/utilities/fsl_debug_console.c
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -ffreestanding -fno-builtin -Wall  -g -DDEBUG -DCPU_MK60DN512VMD10 -DTWR_K60D100M -DTOWER -I../../../../../../../CMSIS/Include -I../../../../../../../devices -I../.. -I../../../../../../../middleware/sdmmc_2.1.2/inc -I../../../../../../../middleware/sdmmc_2.1.2/src -I../../../../../../../middleware/sdmmc_2.1.2/port -I../../../../.. -I../../../../../../../devices/MK60D10/drivers -I../../../../../../../devices/MK60D10/utilities -I../../../../../../../devices/MK60D10 -std=gnu99 -mapcs -MMD -MP -MF"sdmmc/src/fsl_sdmmc.d" -MT"sdmmc/src/fsl_sdmmc.o" -c -o "sdmmc/src/fsl_sdmmc.o" "C:/Users/majkl/Downloads/SDK2/middleware/sdmmc_2.1.2/src/fsl_sdmmc.c"
+Invoking: Cross ARM C Compiler
+ 
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -ffreestanding -fno-builtin -Wall  -g -DDEBUG -DCPU_MK60DN512VMD10 -DTWR_K60D100M -DTOWER -I../../../../../../../CMSIS/Include -I../../../../../../../devices -I../.. -I../../../../../../../middleware/sdmmc_2.1.2/inc -I../../../../../../../middleware/sdmmc_2.1.2/src -I../../../../../../../middleware/sdmmc_2.1.2/port -I../../../../.. -I../../../../../../../devices/MK60D10/drivers -I../../../../../../../devices/MK60D10/utilities -I../../../../../../../devices/MK60D10 -std=gnu99 -mapcs -MMD -MP -MF"sdmmc/port/event.d" -MT"sdmmc/port/event.o" -c -o "sdmmc/port/event.o" "C:/Users/majkl/Downloads/SDK2/boards/twrk60d100m/driver_examples/sdcard/polling/event.c"
+Building file: C:/Users/majkl/Downloads/SDK2/boards/twrk60d100m/driver_examples/sdcard/polling/fsl_host.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -ffreestanding -fno-builtin -Wall  -g -DDEBUG -DCPU_MK60DN512VMD10 -DTWR_K60D100M -DTOWER -I../../../../../../../CMSIS/Include -I../../../../../../../devices -I../.. -I../../../../../../../middleware/sdmmc_2.1.2/inc -I../../../../../../../middleware/sdmmc_2.1.2/src -I../../../../../../../middleware/sdmmc_2.1.2/port -I../../../../.. -I../../../../../../../devices/MK60D10/drivers -I../../../../../../../devices/MK60D10/utilities -I../../../../../../../devices/MK60D10 -std=gnu99 -mapcs -MMD -MP -MF"sdmmc/port/fsl_host.d" -MT"sdmmc/port/fsl_host.o" -c -o "sdmmc/port/fsl_host.o" "C:/Users/majkl/Downloads/SDK2/boards/twrk60d100m/driver_examples/sdcard/polling/fsl_host.c"
+Finished building: C:/Users/majkl/Downloads/SDK2/middleware/sdmmc_2.1.2/src/fsl_sdmmc.c
+ 
+Finished building: C:/Users/majkl/Downloads/SDK2/boards/twrk60d100m/driver_examples/sdcard/polling/event.c
+Building file: C:/Users/majkl/Downloads/SDK2/devices/MK60D10/drivers/fsl_clock.c
+ 
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -ffreestanding -fno-builtin -Wall  -g -DDEBUG -DCPU_MK60DN512VMD10 -DTWR_K60D100M -DTOWER -I../../../../../../../CMSIS/Include -I../../../../../../../devices -I../.. -I../../../../../../../middleware/sdmmc_2.1.2/inc -I../../../../../../../middleware/sdmmc_2.1.2/src -I../../../../../../../middleware/sdmmc_2.1.2/port -I../../../../.. -I../../../../../../../devices/MK60D10/drivers -I../../../../../../../devices/MK60D10/utilities -I../../../../../../../devices/MK60D10 -std=gnu99 -mapcs -MMD -MP -MF"drivers/fsl_clock.d" -MT"drivers/fsl_clock.o" -c -o "drivers/fsl_clock.o" "C:/Users/majkl/Downloads/SDK2/devices/MK60D10/drivers/fsl_clock.c"
+Building file: C:/Users/majkl/Downloads/SDK2/devices/MK60D10/drivers/fsl_common.c
+Finished building: C:/Users/majkl/Downloads/SDK2/middleware/sdmmc_2.1.2/src/fsl_sd.c
+Invoking: Cross ARM C Compiler
+Finished building: C:/Users/majkl/Downloads/SDK2/boards/twrk60d100m/driver_examples/sdcard/polling/fsl_host.c
+ 
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -ffreestanding -fno-builtin -Wall  -g -DDEBUG -DCPU_MK60DN512VMD10 -DTWR_K60D100M -DTOWER -I../../../../../../../CMSIS/Include -I../../../../../../../devices -I../.. -I../../../../../../../middleware/sdmmc_2.1.2/inc -I../../../../../../../middleware/sdmmc_2.1.2/src -I../../../../../../../middleware/sdmmc_2.1.2/port -I../../../../.. -I../../../../../../../devices/MK60D10/drivers -I../../../../../../../devices/MK60D10/utilities -I../../../../../../../devices/MK60D10 -std=gnu99 -mapcs -MMD -MP -MF"drivers/fsl_common.d" -MT"drivers/fsl_common.o" -c -o "drivers/fsl_common.o" "C:/Users/majkl/Downloads/SDK2/devices/MK60D10/drivers/fsl_common.c"
+ 
+Building file: C:/Users/majkl/Downloads/SDK2/devices/MK60D10/drivers/fsl_flash.c
+Building file: C:/Users/majkl/Downloads/SDK2/devices/MK60D10/drivers/fsl_gpio.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -ffreestanding -fno-builtin -Wall  -g -DDEBUG -DCPU_MK60DN512VMD10 -DTWR_K60D100M -DTOWER -I../../../../../../../CMSIS/Include -I../../../../../../../devices -I../.. -I../../../../../../../middleware/sdmmc_2.1.2/inc -I../../../../../../../middleware/sdmmc_2.1.2/src -I../../../../../../../middleware/sdmmc_2.1.2/port -I../../../../.. -I../../../../../../../devices/MK60D10/drivers -I../../../../../../../devices/MK60D10/utilities -I../../../../../../../devices/MK60D10 -std=gnu99 -mapcs -MMD -MP -MF"drivers/fsl_flash.d" -MT"drivers/fsl_flash.o" -c -o "drivers/fsl_flash.o" "C:/Users/majkl/Downloads/SDK2/devices/MK60D10/drivers/fsl_flash.c"
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -ffreestanding -fno-builtin -Wall  -g -DDEBUG -DCPU_MK60DN512VMD10 -DTWR_K60D100M -DTOWER -I../../../../../../../CMSIS/Include -I../../../../../../../devices -I../.. -I../../../../../../../middleware/sdmmc_2.1.2/inc -I../../../../../../../middleware/sdmmc_2.1.2/src -I../../../../../../../middleware/sdmmc_2.1.2/port -I../../../../.. -I../../../../../../../devices/MK60D10/drivers -I../../../../../../../devices/MK60D10/utilities -I../../../../../../../devices/MK60D10 -std=gnu99 -mapcs -MMD -MP -MF"drivers/fsl_gpio.d" -MT"drivers/fsl_gpio.o" -c -o "drivers/fsl_gpio.o" "C:/Users/majkl/Downloads/SDK2/devices/MK60D10/drivers/fsl_gpio.c"
+Finished building: C:/Users/majkl/Downloads/SDK2/devices/MK60D10/drivers/fsl_common.c
+ 
+Building file: C:/Users/majkl/Downloads/SDK2/devices/MK60D10/drivers/fsl_sdhc.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -ffreestanding -fno-builtin -Wall  -g -DDEBUG -DCPU_MK60DN512VMD10 -DTWR_K60D100M -DTOWER -I../../../../../../../CMSIS/Include -I../../../../../../../devices -I../.. -I../../../../../../../middleware/sdmmc_2.1.2/inc -I../../../../../../../middleware/sdmmc_2.1.2/src -I../../../../../../../middleware/sdmmc_2.1.2/port -I../../../../.. -I../../../../../../../devices/MK60D10/drivers -I../../../../../../../devices/MK60D10/utilities -I../../../../../../../devices/MK60D10 -std=gnu99 -mapcs -MMD -MP -MF"drivers/fsl_sdhc.d" -MT"drivers/fsl_sdhc.o" -c -o "drivers/fsl_sdhc.o" "C:/Users/majkl/Downloads/SDK2/devices/MK60D10/drivers/fsl_sdhc.c"
+Finished building: C:/Users/majkl/Downloads/SDK2/devices/MK60D10/drivers/fsl_clock.c
+Finished building: C:/Users/majkl/Downloads/SDK2/devices/MK60D10/drivers/fsl_gpio.c
+ 
+ 
+Building file: C:/Users/majkl/Downloads/SDK2/devices/MK60D10/drivers/fsl_smc.c
+Finished building: C:/Users/majkl/Downloads/SDK2/devices/MK60D10/drivers/fsl_flash.c
+Building file: C:/Users/majkl/Downloads/SDK2/devices/MK60D10/drivers/fsl_sysmpu.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -ffreestanding -fno-builtin -Wall  -g -DDEBUG -DCPU_MK60DN512VMD10 -DTWR_K60D100M -DTOWER -I../../../../../../../CMSIS/Include -I../../../../../../../devices -I../.. -I../../../../../../../middleware/sdmmc_2.1.2/inc -I../../../../../../../middleware/sdmmc_2.1.2/src -I../../../../../../../middleware/sdmmc_2.1.2/port -I../../../../.. -I../../../../../../../devices/MK60D10/drivers -I../../../../../../../devices/MK60D10/utilities -I../../../../../../../devices/MK60D10 -std=gnu99 -mapcs -MMD -MP -MF"drivers/fsl_smc.d" -MT"drivers/fsl_smc.o" -c -o "drivers/fsl_smc.o" "C:/Users/majkl/Downloads/SDK2/devices/MK60D10/drivers/fsl_smc.c"
+ 
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -ffreestanding -fno-builtin -Wall  -g -DDEBUG -DCPU_MK60DN512VMD10 -DTWR_K60D100M -DTOWER -I../../../../../../../CMSIS/Include -I../../../../../../../devices -I../.. -I../../../../../../../middleware/sdmmc_2.1.2/inc -I../../../../../../../middleware/sdmmc_2.1.2/src -I../../../../../../../middleware/sdmmc_2.1.2/port -I../../../../.. -I../../../../../../../devices/MK60D10/drivers -I../../../../../../../devices/MK60D10/utilities -I../../../../../../../devices/MK60D10 -std=gnu99 -mapcs -MMD -MP -MF"drivers/fsl_sysmpu.d" -MT"drivers/fsl_sysmpu.o" -c -o "drivers/fsl_sysmpu.o" "C:/Users/majkl/Downloads/SDK2/devices/MK60D10/drivers/fsl_sysmpu.c"
+Building file: C:/Users/majkl/Downloads/SDK2/devices/MK60D10/drivers/fsl_uart.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -ffreestanding -fno-builtin -Wall  -g -DDEBUG -DCPU_MK60DN512VMD10 -DTWR_K60D100M -DTOWER -I../../../../../../../CMSIS/Include -I../../../../../../../devices -I../.. -I../../../../../../../middleware/sdmmc_2.1.2/inc -I../../../../../../../middleware/sdmmc_2.1.2/src -I../../../../../../../middleware/sdmmc_2.1.2/port -I../../../../.. -I../../../../../../../devices/MK60D10/drivers -I../../../../../../../devices/MK60D10/utilities -I../../../../../../../devices/MK60D10 -std=gnu99 -mapcs -MMD -MP -MF"drivers/fsl_uart.d" -MT"drivers/fsl_uart.o" -c -o "drivers/fsl_uart.o" "C:/Users/majkl/Downloads/SDK2/devices/MK60D10/drivers/fsl_uart.c"
+Finished building: C:/Users/majkl/Downloads/SDK2/devices/MK60D10/drivers/fsl_smc.c
+ 
+Finished building: C:/Users/majkl/Downloads/SDK2/devices/MK60D10/drivers/fsl_sdhc.c
+ 
+Building file: C:/Users/majkl/Downloads/SDK2/boards/twrk60d100m/driver_examples/sdcard/polling/board.c
+Finished building: C:/Users/majkl/Downloads/SDK2/devices/MK60D10/drivers/fsl_sysmpu.c
+Invoking: Cross ARM C Compiler
+Building file: C:/Users/majkl/Downloads/SDK2/boards/twrk60d100m/driver_examples/sdcard/polling/clock_config.c
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -ffreestanding -fno-builtin -Wall  -g -DDEBUG -DCPU_MK60DN512VMD10 -DTWR_K60D100M -DTOWER -I../../../../../../../CMSIS/Include -I../../../../../../../devices -I../.. -I../../../../../../../middleware/sdmmc_2.1.2/inc -I../../../../../../../middleware/sdmmc_2.1.2/src -I../../../../../../../middleware/sdmmc_2.1.2/port -I../../../../.. -I../../../../../../../devices/MK60D10/drivers -I../../../../../../../devices/MK60D10/utilities -I../../../../../../../devices/MK60D10 -std=gnu99 -mapcs -MMD -MP -MF"board/board.d" -MT"board/board.o" -c -o "board/board.o" "C:/Users/majkl/Downloads/SDK2/boards/twrk60d100m/driver_examples/sdcard/polling/board.c"
+ 
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -ffreestanding -fno-builtin -Wall  -g -DDEBUG -DCPU_MK60DN512VMD10 -DTWR_K60D100M -DTOWER -I../../../../../../../CMSIS/Include -I../../../../../../../devices -I../.. -I../../../../../../../middleware/sdmmc_2.1.2/inc -I../../../../../../../middleware/sdmmc_2.1.2/src -I../../../../../../../middleware/sdmmc_2.1.2/port -I../../../../.. -I../../../../../../../devices/MK60D10/drivers -I../../../../../../../devices/MK60D10/utilities -I../../../../../../../devices/MK60D10 -std=gnu99 -mapcs -MMD -MP -MF"board/clock_config.d" -MT"board/clock_config.o" -c -o "board/clock_config.o" "C:/Users/majkl/Downloads/SDK2/boards/twrk60d100m/driver_examples/sdcard/polling/clock_config.c"
+Building file: C:/Users/majkl/Downloads/SDK2/boards/twrk60d100m/driver_examples/sdcard/polling/pin_mux.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -ffreestanding -fno-builtin -Wall  -g -DDEBUG -DCPU_MK60DN512VMD10 -DTWR_K60D100M -DTOWER -I../../../../../../../CMSIS/Include -I../../../../../../../devices -I../.. -I../../../../../../../middleware/sdmmc_2.1.2/inc -I../../../../../../../middleware/sdmmc_2.1.2/src -I../../../../../../../middleware/sdmmc_2.1.2/port -I../../../../.. -I../../../../../../../devices/MK60D10/drivers -I../../../../../../../devices/MK60D10/utilities -I../../../../../../../devices/MK60D10 -std=gnu99 -mapcs -MMD -MP -MF"board/pin_mux.d" -MT"board/pin_mux.o" -c -o "board/pin_mux.o" "C:/Users/majkl/Downloads/SDK2/boards/twrk60d100m/driver_examples/sdcard/polling/pin_mux.c"
+Finished building: C:/Users/majkl/Downloads/SDK2/devices/MK60D10/drivers/fsl_uart.c
+ 
+Finished building: C:/Users/majkl/Downloads/SDK2/boards/twrk60d100m/driver_examples/sdcard/polling/board.c
+ 
+Finished building: C:/Users/majkl/Downloads/SDK2/boards/twrk60d100m/driver_examples/sdcard/polling/clock_config.c
+ 
+Finished building: C:/Users/majkl/Downloads/SDK2/boards/twrk60d100m/driver_examples/sdcard/polling/pin_mux.c
+ 
+Building target: sdcard_polling_twrk60d100m.elf
+Invoking: Cross ARM C++ Linker
+arm-none-eabi-g++ -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -ffreestanding -fno-builtin -Wall  -g -T ../settings/MK60DN512xxx10_flash.ld -Xlinker --gc-sections -Wl,-Map,"sdcard_polling_twrk60d100m.map" --specs=nano.specs -mapcs  -Xlinker -static  -Xlinker -z  -Xlinker muldefs -o "sdcard_polling_twrk60d100m.elf" -Xlinker --start-group  ./utilities/fsl_debug_console.o  ./startup/startup_MK60D10.o ./startup/system_MK60D10.o  ./source/sdcard_polling.o  ./sdmmc/src/fsl_sd.o ./sdmmc/src/fsl_sdmmc.o  ./sdmmc/port/event.o ./sdmmc/port/fsl_host.o  ./drivers/fsl_clock.o ./drivers/fsl_common.o ./drivers/fsl_flash.o ./drivers/fsl_gpio.o ./drivers/fsl_sdhc.o ./drivers/fsl_smc.o ./drivers/fsl_sysmpu.o ./drivers/fsl_uart.o  ./board/board.o ./board/clock_config.o ./board/pin_mux.o   -lm -lg -lgcc -lnosys -Xlinker --end-group
+Finished building target: sdcard_polling_twrk60d100m.elf
+ 
+
+07:15:06 Build Finished (took 3s.204ms)
+

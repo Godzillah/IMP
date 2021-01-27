@@ -1,0 +1,6 @@
+13:08:03 **** Incremental Build of configuration debug for project wdog_twrk60d100m ****
+make -k -j4 all 
+make: Nothing to be done for 'all'.
+
+13:08:03 Build Finished (took 265ms)
+

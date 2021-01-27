@@ -1,0 +1,146 @@
+/* Header file with all the essential definitions for a given type of MCU */
+#include "MK60D10.h"
+#include "mcg.h"
+#include "io.h"
+#include "uart.h"
+
+#define TRUE 1
+
+/* Parameters:
+  *  seconds         Start value of seconds register
+  *  alarm           Time in seconds of first alarm. Set to 0xFFFFFFFF to effectively disable alarm
+  *  c_interval      Interval at which to apply time compensation can range from 1 second (0x0) to 256 (0xFF)
+  *  c_value         Compensation value ranges from -127 32kHz cycles to +128 32 kHz cycles
+  *                  80h Time prescaler register overflows every 32896 clock cycles.
+  *                  FFh Time prescaler register overflows every 32769 clock cycles.
+  *                  00h Time prescaler register overflows every 32768 clock cycles.
+  *                  01h Time prescaler register overflows every 32767 clock cycles.
+  *                  7Fh Time prescaler register overflows every 32641 clock cycles.
+  *  interrupt       TRUE or FALSE
+  */
+void rtc_init(uint32_t seconds, uint32_t alarm, uint8_t c_interval, uint8_t c_value, uint8_t interrupt)
+{
+	unsigned int i;
+
+	/*enable the clock to SRTC module register space*/
+	SIM->SCGC6 |= SIM_SCGC6_RTC_MASK;
+	printf("\r\nRTC module register space clock enabled...\r\n");
+
+	/* Only VBAT_POR has an effect on the SRTC, RESET to the part does not,
+	 * so you must manually reset the SRTC to make sure everything is in a known state.
+	 *
+	 * Clear the software reset bit!!!
+	 */
+	RTC->CR  = RTC_CR_SWR_MASK;
+	RTC->CR  &= ~RTC_CR_SWR_MASK;
+	printf("RTC module reset finished...\r\n");
+
+	/* Clear possibly pending interrupt request and enable the interrupt for RTC. */
+	NVIC_ClearPendingIRQ(66);
+	NVIC_EnableIRQ(66);
+	printf("NVIC interrupt for RTC module enabled...\r\n");
+
+	/*Enable the oscillator*/
+	RTC->CR |= RTC_CR_OSCE_MASK;
+	printf("RTC module oscillator enabled...\r\n");
+
+	/*Wait to all the 32 kHz to stabilize, refer to the crystal startup time in the crystal datasheet*/
+	 for(i=0; i<0x600000; i++);
+	printf("RTC module oscillator stable...\r\n\n");
+
+	/*Set time compensation parameters*/
+	RTC->TCR = RTC_TCR_CIR(c_interval) | RTC_TCR_TCR(c_value);
+
+	/*Configure the timer seconds and alarm registers*/
+	RTC->TSR = seconds;
+	RTC->TAR = alarm;
+
+	/* The interrupt enable flag should be send automatically after MCU reset. */
+	/* Its explicit configuration is a sort of precaution towards reliable operation */
+	// RTC->IER |= RTC_IER_TAIE_MASK;
+
+	/*Enable the counter*/
+	RTC->SR |= RTC_SR_TCE_MASK;
+}
+
+extern void RTC_IRQHandler() {
+	printf("\r\nRTC(SR) Register with SR_TAF_MASK is -> %x\n", RTC->SR & RTC_SR_TAF_MASK);
+
+   if((RTC->SR & RTC_SR_TIF_MASK)== 0x01) {
+       printf("RTC time invalid interrupt entered...\r\n");
+   	   RTC->SR &= 0x07;  //clear TCE, or RTC_TSR can  not be written
+   	   RTC->TSR = 0x00000000;  //clear TIF
+   }
+   else if((RTC->SR & RTC_SR_TOF_MASK) == 0x02) {
+   	   	   printf("RTC time overflow interrupt entered...\r\n");
+   	   	   RTC->SR &= 0x07;  //clear TCE, or RTC_TSR can  not be written
+   	   	   RTC->TSR = 0x00000000;  //clear TOF
+   } else if((RTC->SR & RTC_SR_TAF_MASK) == 0x04) {
+	   printf("RTC alarm interrupt entered...\r\n");
+	   printf("TSR register has: %ld\n", RTC->TSR);
+	   printf("TAR register has: %ld\n", RTC->TAR);
+	   RTC->TAR += 5;// Write new alarm value, to generate an alarm every second add 5
+   }
+}
+
+void help() {
+	printf("\rPlease choose type of test from the following list:");
+	printf("\r\n\t Type -> 1 - RTC test with incrementing tar register");
+	printf("\r\n\t Type -> 2 - RTC test with overflow tar register");
+	printf("\r\n\t Type -> 3 - MCU buttons test");
+	printf("\r\n\t Type -> 4 - CRC cards test with 16-bit");
+	printf("\r\n\t Type -> 5 - CRC cards test with 32-bit");
+	printf("\r\n\t Type -> 6 - LED + beep test");
+	printf("\r\n\t Type -> 7 - Watchdog deadlock test\n");
+}
+
+void sleep(int miliseconds) {
+	for(int i = 0; i < miliseconds; i++);
+}
+
+int main (void)
+{
+	// Transition back to FEI mode (default mode upon restart)
+	MCG_FEI_BLPE();
+
+	// Configure the TX and RX pins for UART5
+	SIM->SCGC5 = SIM_SCGC5_PORTE_MASK;
+	PORTE->PCR[8] = PORT_PCR_MUX(0x03);
+	PORTE->PCR[9] = PORT_PCR_MUX(0x03);
+
+	// Initialize the UART.
+	// Use TERM_PORT = UART3_BASE_PTR for the 9pin serial port. (Defined in uart.h)
+	// Configure for 50 MHz peripheral clock and 115200 target baud rate.
+	uart_init(TERM_PORT, 50000, 115200);
+
+	help();
+
+	for(;;) {
+	  		// Wait until a key is pressed
+	  		while(char_present() == 0);
+
+	  		switch(in_char()) {
+	  			case '1':
+	  				printf("\r\t You typed -> 1 - RTC test with incrementing tar register\n");
+					printf("\rThis example generates an interrupt every 5 seconds!\n");
+
+					rtc_init(0, 0, 0, 0, TRUE);
+					while(1) {
+						printf("\rControlling if value on TAR register is 40\n");
+						sleep(20000);
+						if(RTC->TAR == 0x28) {	// if register TAR has 40 number we will suspend while loop and let user choose another test...
+							break;
+						}
+					}
+				case '2':
+					printf("\r\t You typed -> 2 -RTC test with overflow tar register\n");
+
+					rtc_init(0xFFFFFFF0, 0xFFFFFFF5, 0, 0, TRUE);
+					while(1);
+	  			default:
+	  				printf("You pressed not valid input '%c'\n\r", in_char());
+	  				help();
+			}
+	  	}
+	return 0;
+}

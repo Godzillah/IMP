@@ -1,0 +1,29 @@
+Skupina A
+
+1) Definice vestavěného systému
+2) Porovnání RAM, Flash pamětí z hlediska kapacity, rychlosti zápisu a schopnosti uchovat data
+3) Zadán program, určit hodnotu A v zadaném místě:
+_Startup: 
+ldhx #RAMEnd+1
+txs
+ldhx #2
+lda data, X
+swi
+; Jaká je hodnota v tomto bodě v akumulátoru?
+loop: bra loop
+action:
+inca
+rti
+
+data: dc.b 0, 2, 9, $f
+
+ORG $FFFC
+DC.W action
+DC.W _Startup
+
+4) bajt 10100111 zabalit do datového rámce se sudou paritou, klidová hodnota je 1
+5) co udělat aby šlo vyvolat přerušení od nějakého modulu
+6) blokové schéma SPI, popsat
+7) Časovací jednotka č.1 je použita pro generování impulzního signálu kanálu č.0 v režimu PWM s nastavením clear-output-on-compare a high-true-pulses. Perioda signálu je 0.5 ms a střída je 50%. Frekvence hodin je upravena předděličkou na 2MHz. Určete dekadicky hodnoty TMP1MOD a TMP1C0V.
+8) A/D převodník, 10b. VL = 0V, VH = 2,7V. Jaké je vstupní napětí, pokud je výsledek převodu 341?
+

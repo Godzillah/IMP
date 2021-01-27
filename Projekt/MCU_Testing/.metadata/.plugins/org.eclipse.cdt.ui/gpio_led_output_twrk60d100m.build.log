@@ -1,0 +1,6 @@
+20:40:16 **** Incremental Build of configuration debug for project gpio_led_output_twrk60d100m ****
+make -k -j4 all 
+make: Nothing to be done for 'all'.
+
+20:40:16 Build Finished (took 266ms)
+

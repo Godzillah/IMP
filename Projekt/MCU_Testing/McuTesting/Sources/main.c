@@ -1,0 +1,86 @@
+/**
+ * author  : Maroš Orsák (xorsak02)
+ * file	   : main.c
+ * created : 8.11.2019
+ */
+
+#include "MK60D10.h"
+#include "libs/mcg.h"
+#include "libs/io.h"
+#include "libs/uart.h"
+#include "libs/gpio.h"
+#include "libs/crc.h"
+#include "libs/wdog.h"
+#include "libs/rtc.h"
+#include "libs/testUtils.h"
+
+extern void RTC_IRQHandler() {
+	printf("\r\n[INFO] - RTC(SR) Register with SR_TAF_MASK is -> %x\n", RTC->SR & RTC_SR_TAF_MASK);
+
+   if((RTC->SR & RTC_SR_TIF_MASK)== 0x01) {
+       printf("[INFO] - RTC INVALID INTERRUPT.\r\n");
+       printf("[INFO] - Clearing TCE, setting RTC_TSR to zero, which will implicitly clears TIF\r");
+   	   RTC->SR &= 0x07;
+   	   RTC->TSR = 0x00000000;
+   } else if((RTC->SR & RTC_SR_TOF_MASK) == 0x02) {
+	   printf("[IMPORTANT] - RTC OVERFLOW INTERRUPT.");
+	   printf("[INFO] -  Clearing TCE , setting RTC_TSR to zero.");
+	   RTC->SR &= 0x07;
+	   RTC->TSR = 0x00000000;
+   } else if((RTC->SR & RTC_SR_TAF_MASK) == 0x04) {
+	   printf("[INFO] - RTC ALARM INTERRUPT\r\n");
+	   printf("[IMPORTANT] - TSR register has: %X\r\n", RTC->TSR);
+	   printf("[IMPORTANT] - TAR register has: %X\r\n", RTC->TAR);
+	   printf("[IMPORTANT] - Incrementing register TAR to 5 more, next interrupt in 5 seconds.");
+	   RTC->TAR += 5;
+   } else {
+	   printf("\r\n[ERROR] - Time invalid flag you probably did not set TSR register to zero, which implicitly clears TIF bit in SR register\n");
+   }
+}
+
+int main (void) {
+	MCG_FEI_BLPE();
+
+	setTxAndRxPins();
+
+	uart_init(TERM_PORT, 50000, 115200);
+
+	printf("\r[INFO] - UART initialized for communication\n");
+	help();
+
+	for(;;) {
+	  		while(char_present() == 0);
+
+	  		switch(in_char()) {
+	  			case '1':
+	  				printf("\r[IMPORTANT] - You typed -> 1 - RTC test with incrementing tar register\n");
+					initRealTimeClock(0, 0);
+					while(1);
+				case '2':
+					printf("\r[INFO] - You typed -> 2 -RTC test with overflow tar register\n");
+					initRealTimeClock(0xFFFFFFF0, 0xFFFFFFF5);
+					while(1);
+				case '3':
+					printf("\r[INFO] -You typed -> 3 - MCU buttons test\n");
+					clockAndPinsExample();
+					while(1);
+				case '4':
+					printf("\r[INFO] - You typed -> 4 - CRC cards test with 16-bit\n");
+					calc16CRCByHardwareExample();
+					while(1);
+				case '5':
+					printf("\r[INFO] - You typed -> 5 - CRC cards test with 32-bit\n");
+					calc32CRCByHardwareExample();
+					while(1);
+				case '6':
+					printf("\r\n\t Type -> 6 - Watchdog deadlock test\n");
+					wdogResetInvokeExample();
+					printf("\r\nTrigger Watchdog reset with changing value to locked register\n");
+					while(1);
+				default:
+	  				printf("[ERROR] - You pressed not valid input '%c'\n\r", in_char());
+	  				help();
+	  		}
+	}
+	return 0;
+}

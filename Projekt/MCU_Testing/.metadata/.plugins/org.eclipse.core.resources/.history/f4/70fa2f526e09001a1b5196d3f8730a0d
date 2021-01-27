@@ -1,0 +1,5 @@
+#include "testUtils.h"
+
+int assertEqualsInt(int excepted, int actual) {
+	return excepted == actual ? 0 : -1;
+}

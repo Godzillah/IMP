@@ -1,0 +1,110 @@
+/**
+ * author: unknown
+ */
+
+#include "crc.h"
+
+
+uint16_t culCalcCRCBySoftware(uint8_t crcData, uint16_t crcReg) {
+	uint8_t i;
+	for (i = 0; i < 8; i++) {
+		if (((crcReg & 0x8000) >> 8) ^ (crcData & 0x80))
+			crcReg = (crcReg << 1) ^ CRC16_POLY;
+		else
+			crcReg = (crcReg << 1);
+		crcData <<= 1;
+	}
+	return crcReg;
+}
+//----------------------------------------------------------------
+
+/*
+ * Retrieved from http://cache.freescale.com/files/microcontrollers/doc/ref_manual/K60P120M100SF2RM.pdf
+ * To compute a 16-bit CRC:
+		1. Clear CTRL[TCRC] to enable 16-bit CRC mode.
+		2. Program the transpose and complement options in the CTRL register as required for
+		the CRC calculation. See Transpose feature and CRC result complement for details.
+		3. Write a 16-bit polynomial to the GPOLY[LOW] field. The GPOLY[HIGH] field is
+		not usable in 16-bit CRC mode.
+		4. Set CTRL[WAS] to program the seed value.
+		5. Write a 16-bit seed to CRC[LU:LL]. CRC[HU:HL] are not used.
+		6. Clear CTRL[WAS] to start writing data values.
+		7. Write data values into CRC[HU:HL:LU:LL]. A CRC is computed on every data
+		value write, and the intermediate CRC result is stored back into CRC[LU:LL].
+		8. When all values have been written, read the final CRC result from CRC[LU:LL].
+
+	1) with seed zero value
+	2) ReflectIn in false -> reversing input
+	3) ReflecOut in false -> reversing output
+	4) complement out
+ */
+
+void calc16CRCByHardware(uint32_t data, uint32_t polynomial_number) {
+	// enable CRC module
+	SIM_SCGC6 |= SIM_SCGC6_CRC_MASK;
+
+	/* Configure CRC_CTRL for 16-bit and complement read */
+	CRC_BASE_PTR->CTRL    =     CRC_CTRL_FXOR_MASK;
+	CRC_BASE_PTR->CTRL    &=     ~CRC_CTRL_TCRC_MASK;
+
+	/* Write SAEJ1850 polynomial to CRC_GPOLY register - SAE J1850 CRC: X8 + X4 + X3 + X2 + 1 */
+	printf("\r[INFO] - Polynomial will be set to value:%ld\n", polynomial_number);
+	CRC_BASE_PTR->GPOLY_ACCESS16BIT.GPOLYL    =    polynomial_number;
+	printf("\r[INFO] - Polynomial number is:%ld\n", CRC_BASE_PTR->GPOLY_ACCESS16BIT.GPOLYL );
+
+	/* Configure CRC_CTRL for seed */
+	CRC_BASE_PTR->CTRL    |=     (CRC_CTRL_WAS_MASK);
+
+	/* Seed CRC with all ones */
+	//CRC_BASE_PTR->ACCESS16BIT.CRCH    =    0x0000;
+	CRC_BASE_PTR->ACCESS16BIT.CRCL    =    0x0000u;
+
+	/* Clear seed bit to start writing data values */
+	CRC_BASE_PTR->CTRL    &=     (~CRC_CTRL_WAS_MASK);
+
+	/* Write data to CRC data register */
+	CRC_BASE_PTR->CRC                =    data;        /* Data */
+
+	/* Output complement of remainder */
+	printf("CRC checksum:\t%X   \n", (uint16_t) CRC_BASE_PTR->ACCESS16BIT.CRCL);
+
+	/* Output remainder */
+	CRC_BASE_PTR->CTRL    &=     (~CRC_CTRL_FXOR_MASK);
+	printf("CRC byte:\t%X   \n", (uint16_t) CRC_BASE_PTR->ACCESS16BIT.CRCL);
+}
+
+void calc32CRCByHardware(uint32_t data, uint_32_t polynomial_number) {
+	// enable CRC module
+	SIM_SCGC6 |= SIM_SCGC6_CRC_MASK;
+
+	CRC_BASE_PTR->CTRL    &=     CRC_CTRL_TCRC_MASK;
+
+	/* Configure CRC_CTRL for 32-bit and complement read */
+	CRC_BASE_PTR->CTRL    =     CRC_CTRL_FXOR_MASK;
+	CRC_BASE_PTR->CTRL    &=    CRC_CTRL_TCRC_MASK;
+
+	/* Write SAEJ1850 polynomial to CRC_GPOLY register - SAE J1850 CRC: X8 + X4 + X3 + X2 + 1 */
+	printf("\r[INFO] - Polynomial will be set to value:%ld\n", polynomial_number);
+	CRC_BASE_PTR->GPOLY    =    polynomial_number;
+	printf("\r[INFO] - Polynomial number is:%ld\n", CRC_BASE_PTR->GPOLY );
+
+	/* Configure CRC_CTRL for seed */
+	CRC_BASE_PTR->CTRL    |=     (CRC_CTRL_WAS_MASK);
+
+	/* Seed CRC with all ones */
+	//CRC_BASE_PTR->ACCESS16BIT.CRCH    =    0x0000;
+	CRC_BASE_PTR->CTRL    =    0x00000000u;
+
+	/* Clear seed bit to start writing data values */
+	CRC_BASE_PTR->CTRL    &=     (~CRC_CTRL_WAS_MASK);
+
+	/* Write data to CRC data register */
+	CRC_BASE_PTR->CRC                =    data;        /* Data */
+
+	/* Output complement of remainder */
+	printf("CRC checksum:\t%X   \n", (uint16_t) CRC_BASE_PTR->CRC);
+
+	/* Output remainder */
+	CRC_BASE_PTR->CTRL    &=     (~CRC_CTRL_FXOR_MASK);
+	printf("CRC byte:\t%X   \n", (uint16_t) CRC_BASE_PTR->CRC);
+}

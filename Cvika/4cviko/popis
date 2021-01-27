@@ -1,0 +1,1 @@
+Ve schématu laboratorního kitu nastudovat způsob připojení zdroje analogového signálu na vstup AD převodníku, dokončit implementaci chybějícího nastavení AD převodníku a zpracování získaného vzorku v obsluze přerušení vyvolané po dokončení AD převodu.

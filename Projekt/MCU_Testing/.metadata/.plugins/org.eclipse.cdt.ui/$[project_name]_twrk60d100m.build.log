@@ -1,0 +1,6 @@
+19:17:31 **** Incremental Build of configuration debug for project $[project_name]_twrk60d100m ****
+make -k -j4 all 
+make: *** No rule to make target 'all'.
+
+19:17:31 Build Finished (took 157ms)
+

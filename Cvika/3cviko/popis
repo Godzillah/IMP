@@ -1,0 +1,3 @@
+Pulsní šířková modulace (PWM) pomocí časovače a na ní založená aplikace (řízení svitu RGB LED).
+
+PS: Trošku jsem dostal zdrba za neostrou hranu signálu, ale prej je to OK, takže si to kdyžtak dolaďte.

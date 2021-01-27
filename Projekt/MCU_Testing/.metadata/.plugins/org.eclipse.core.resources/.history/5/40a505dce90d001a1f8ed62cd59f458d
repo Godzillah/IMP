@@ -1,0 +1,35 @@
+/*
+ * gpio.h
+ * Author: (c) 2019 Michal Bidlo, BUT FIT, bidlom@fit.vutbr.cz
+ */
+
+#ifndef SOURCES_GPIO_H_
+#define SOURCES_GPIO_H_
+
+#include "MK60D10.h"
+#include "io.h"
+#include "../testUtils.h"
+
+/* Macros for bit-level registers manipulation */
+#define GPIO_PIN_MASK 0x1Fu
+#define GPIO_PIN(x) (((1)<<(x & GPIO_PIN_MASK)))
+
+/* Mapping of LEDs and buttons to specific port pins: */
+// Note: only D9, SW3 and SW5 are used in this sample app
+#define LED_D9  0x20      // Port B, bit 5
+#define LED_D10 0x10      // Port B, bit 4
+#define LED_D11 0x8       // Port B, bit 3
+#define LED_D12 0x4       // Port B, bit 2
+
+#define BTN_SW2 0x400     // Port E, bit 10
+#define BTN_SW3 0x1000    // Port E, bit 12
+#define BTN_SW4 0x8000000 // Port E, bit 27
+#define BTN_SW5 0x4000000 // Port E, bit 26
+#define BTN_SW6 0x800     // Port E, bit 11
+
+#define SPK 0x10          // Speaker is on PTA4
+
+void initClockAndPins(void);
+void clockAndPinsExample();
+
+#endif /* SOURCES_GPIO_H_ */

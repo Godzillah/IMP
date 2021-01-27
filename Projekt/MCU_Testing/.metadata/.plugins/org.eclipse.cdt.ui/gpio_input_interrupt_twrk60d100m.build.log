@@ -1,0 +1,6 @@
+20:40:15 **** Incremental Build of configuration debug for project gpio_input_interrupt_twrk60d100m ****
+make -k -j4 all 
+make: Nothing to be done for 'all'.
+
+20:40:16 Build Finished (took 281ms)
+

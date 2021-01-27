@@ -1,0 +1,6 @@
+19:17:39 **** Build of configuration debug for project cmp_interrupt_twrk60d100m ****
+make -k -j4 all 
+Command canceled
+
+19:17:39 Build Cancelled (took 203ms)
+

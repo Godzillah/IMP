@@ -1,0 +1,181 @@
+/* Header file with all the essential definitions for a given type of MCU */
+#include "MK60D10.h"
+#include "mcg.h"
+#include "io.h"
+#include "uart.h"
+#include "testUtils.h"
+#include "gpio.h" // TODO: must change...
+
+int pressed_up = 0, pressed_down = 0;
+int beep_flag = 0;
+unsigned int compare = 0x200;
+
+/* Parameters:
+  *  seconds         Start value of seconds register
+  *  alarm           Time in seconds of first alarm. Set to 0xFFFFFFFF to effectively disable alarm
+  */
+void initRealTimeClock(uint32_t seconds, uint32_t alarm)
+{
+	SIM->SCGC6 |= SIM_SCGC6_RTC_MASK;
+	printf("\r\nRTC module register space clock enabled...\r\n");
+
+	printf("\r\nClearing all RTC register except for the SWR bit.\n");
+	RTC->CR  = RTC_CR_SWR_MASK;
+	RTC->CR  &= ~RTC_CR_SWR_MASK;
+	printf("\r\nRTC module reset done...\r\n");
+
+	// Clears nested vectored interrupt controller pending interrupt request
+	NVIC_ClearPendingIRQ(66);
+	// enable the interrupt for RTC
+	NVIC_EnableIRQ(66);
+	printf("NVIC interrupt for RTC module enabled...\r\n");
+
+	printf("\r\nRTC module oscillator enabling...\r\n");
+	RTC->CR |= RTC_CR_OSCE_MASK;
+	printf("\r\nRTC module oscillator enabled...\r\n");
+
+	// after setting this bit, wait the oscillator startup time before enabling the time counter to allow the 32.768kHz clock time to stabilize
+	for(unsigned int i=0; i<0x600000; i++);
+	printf("\r\nRTC module oscillator stable...\r\n");
+
+	// set Time compensation register to zero
+	RTC->TCR = RTC_TCR_CIR(0) | RTC_TCR_TCR(0);
+
+	printf("\r\n Setting TSR:|%ld| and TAR:|%ld|", seconds, alarm);
+	RTC->TSR = seconds;
+	RTC->TAR = alarm;
+
+	printf("\r\nEnabling Time Counter Enable, which will increment TSR register using TCE MASK");
+	RTC->SR |= RTC_SR_TCE_MASK;
+}
+
+extern void RTC_IRQHandler() {
+	printf("\r\nRTC(SR) Register with SR_TAF_MASK is -> %x\n", RTC->SR & RTC_SR_TAF_MASK);
+
+   if((RTC->SR & RTC_SR_TIF_MASK)== 0x01) {
+       printf("RTC time invalid interrupt entered...\r\n");
+   	   RTC->SR &= 0x07;  //clear TCE, or RTC_TSR can  not be written
+   	   RTC->TSR = 0x00000000;  //clear TIF
+   } else if((RTC->SR & RTC_SR_TOF_MASK) == 0x02) {
+	   printf("RTC time overflow interrupt entered...\r\n");
+	   RTC->SR &= 0x07;  //clear TCE, or RTC_TSR can  not be written
+	   RTC->TSR = 0x00000000;  //clear TOF
+   } else if((RTC->SR & RTC_SR_TAF_MASK) == 0x04) {
+	   printf("RTC alarm interrupt entered...\r\n");
+	   printf("TSR register has: %ld\n", RTC->TSR);
+	   printf("TAR register has: %ld\n", RTC->TAR);
+	   RTC->TAR += 5;// Write new alarm value, to generate an alarm every second add 5
+   } else {
+	   printf("\r\n Time invalid flag you probably did not est TSR register to zero, which implicitly clears TIF bit in SR register\n");
+   }
+}
+
+void help() {
+	printf("\rPlease choose type of test from the following list:");
+	printf("\r\n\t Type -> 1 - RTC test with incrementing tar register");
+	printf("\r\n\t Type -> 2 - RTC test with overflow tar register");
+	printf("\r\n\t Type -> 3 - MCU buttocns test");
+	printf("\r\n\t Type -> 4 - CRC cards test with 16-bit");
+	printf("\r\n\t Type -> 5 - CRC cards test with 32-bit");
+	printf("\r\n\t Type -> 6 - LED + beep test");
+	printf("\r\n\t Type -> 7 - Watchdog deadlock test\n");
+}
+
+
+void LPTMR0_IRQHandler(void)
+{
+	delay(1000);
+
+
+    // Set new compare value set by up/down buttons
+    LPTMR0_CMR = compare;                // !! the CMR reg. may only be changed while TCF == 1
+    LPTMR0_CSR |=  LPTMR_CSR_TCF_MASK;   // writing 1 to TCF tclear the flag
+
+    if ((GPIOE_PDIR & BTN_SW5) == 0) {
+    	printf("\r\nYou clicked up arrow on SW5 button\n");
+    	GPIOA_PDOR ^= SPK;   // invert speaker state
+    }
+
+    printf("\r\nTurn off beep\n");
+    GPIOA_PDOR &= ~SPK;	// logic 0 on speaker port if beep is false
+//    GPIOB_PDOR ^= LED_D9;                // invert D9 state
+    beep_flag = !beep_flag;              // see beep_flag test in main()
+}
+
+int main (void) {
+	// Transition back to FEI mode (default mode upon restart)
+	MCG_FEI_BLPE();
+
+	// Configure the TX and RX pins for UART5
+	SIM->SCGC5 = SIM_SCGC5_PORTE_MASK;
+	PORTE->PCR[8] = PORT_PCR_MUX(0x03);
+	PORTE->PCR[9] = PORT_PCR_MUX(0x03);
+
+	// Use TERM_PORT = UART3_BASE_PTR for the 9pin serial port. (Defined in uart.h)
+	// Configure for 50 MHz peripheral clock and 115200 target baud rate.
+	uart_init(TERM_PORT, 50000, 115200);
+
+	printf("\rUART initialized for communication\n");
+
+	help();
+
+	for(;;) {
+	  		// Wait until a key is pressed
+	  		while(char_present() == 0);
+
+	  		switch(in_char()) {
+	  			case '1':
+	  				printf("\r\t You typed -> 1 - RTC test with incrementing tar register\n");
+					printf("\rThis example generates an interrupt every 5 seconds!\n");
+
+					initRealTimeClock(0, 0);
+					while(1);
+				case '2':
+					printf("\r\t You typed -> 2 -RTC test with overflow tar register\n");
+
+					initRealTimeClock(0xFFFFFFF0, 0xFFFFFFF5);
+					while(1);
+				case '3':
+					printf("\r\n\t You typed -> 3 - MCU buttocns test\n");
+					MCUInit();
+					PortsInit();
+					LPTMR0Init(compare);
+
+					while (1) {
+						// pressing the up button decreases the compare value,
+						// i.e. the compare event will occur more often;
+						// testing pressed_up avoids uncontrolled modification
+						// of compare if the button is hold.
+//						if (!pressed_up && !(GPIOE_PDIR & BTN_SW5))
+//						{
+//							pressed_up = 1;
+//							compare -= 0x40;
+//						}
+//						else if (GPIOE_PDIR & BTN_SW5) pressed_up = 0;
+//						// pressing the down button increases the compare value,
+//						// i.e. the compare event will occur less often;
+//						if (!pressed_down && !(GPIOE_PDIR & BTN_SW3))
+//						{
+//							pressed_down = 1;
+//							compare += 0x40;
+//						}
+//						else if (GPIOE_PDIR & BTN_SW3) pressed_down = 0;
+//						// some limits - in order to keep the LED blinking reasonable
+//						if (compare < 0x40) compare = 0x40;
+//						if (compare > 0x400) compare = 0x400;
+						// test beep_flag in order to beep or not beep
+						if (beep_flag)
+						{
+							GPIOA_PDOR ^= SPK;   // invert speaker state
+							delay(1000);
+						}
+						else GPIOA_PDOR &= ~SPK; // logic 0 on speaker port if beep is false
+					}
+					return 0;
+	  			default:
+	  				printf("You pressed not valid input '%c'\n\r", in_char());
+	  				help();
+	  		}
+	}
+	return 0;
+}

@@ -1,0 +1,7 @@
+13:48:50 **** Clean-only build of configuration Debug for project McuTesting ****
+make clean 
+rm -rf  ./Sources/sources/crc.o ./Sources/sources/gpio.o ./Sources/sources/io.o ./Sources/sources/mcg.o ./Sources/sources/printf.o ./Sources/sources/rtc.o ./Sources/sources/testUtils.o ./Sources/sources/uart.o ./Sources/sources/wdog.o  ./Sources/main.o  ./Project_Settings/Startup_Code/startup_MK60D10.o ./Project_Settings/Startup_Code/system_MK60D10.o  ./Sources/sources/crc.d ./Sources/sources/gpio.d ./Sources/sources/io.d ./Sources/sources/mcg.d ./Sources/sources/printf.d ./Sources/sources/rtc.d ./Sources/sources/testUtils.d ./Sources/sources/uart.d ./Sources/sources/wdog.d  ./Sources/main.d  ./Project_Settings/Startup_Code/system_MK60D10.d  ./Project_Settings/Startup_Code/startup_MK60D10.d  McuTesting.elf
+ 
+
+13:48:50 Build Finished (took 313ms)
+

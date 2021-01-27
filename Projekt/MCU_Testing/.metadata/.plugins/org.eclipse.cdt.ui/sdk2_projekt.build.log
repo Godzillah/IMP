@@ -1,0 +1,6 @@
+13:08:02 **** Incremental Build of configuration debug for project sdk2_projekt ****
+make -k -j4 all 
+make: Nothing to be done for 'all'.
+
+13:08:02 Build Finished (took 312ms)
+

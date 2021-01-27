@@ -1,0 +1,10 @@
+18:51:32 **** Build of configuration debug for project host_printer_plain_text_bm_twrk60d100m ****
+make -k -j4 all 
+Building target: host_printer_plain_text_bm_twrk60d100m.elf
+Invoking: Cross ARM C++ Linker
+arm-none-eabi-g++ -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -ffreestanding -fno-builtin -Wall  -g -T ../settings/MK60DN512xxx10_flash.ld -Xlinker --gc-sections -Wl,-Map,"host_printer_plain_text_bm_twrk60d100m.map" --specs=nano.specs -mapcs  -Xlinker -static  -Xlinker -z  -Xlinker muldefs  -Xlinker --defsym=__usb_ram_size__=0x800 -o "host_printer_plain_text_bm_twrk60d100m.elf" -Xlinker --start-group  ./utilities/fsl_debug_console.o  ./usb/host/class/usb_host_hub.o ./usb/host/class/usb_host_hub_app.o ./usb/host/class/usb_host_printer.o  ./usb/host/usb_host_devices.o ./usb/host/usb_host_framework.o ./usb/host/usb_host_hci.o ./usb/host/usb_host_khci.o  ./startup/startup_MK60D10.o ./startup/system_MK60D10.o  ./sources/app.o ./sources/host_printer.o  ./osa/usb_osa_bm.o  ./drivers/fsl_clock.o ./drivers/fsl_common.o ./drivers/fsl_flash.o ./drivers/fsl_gpio.o ./drivers/fsl_sim.o ./drivers/fsl_smc.o ./drivers/fsl_sysmpu.o ./drivers/fsl_uart.o  ./board/board.o ./board/clock_config.o ./board/pin_mux.o   -lm -lg -lgcc -lnosys -Xlinker --end-group
+Finished building target: host_printer_plain_text_bm_twrk60d100m.elf
+ 
+
+18:51:33 Build Finished (took 1s.32ms)
+

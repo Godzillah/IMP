@@ -1,0 +1,12 @@
+Skupina B
+
+Snad si vzpomenu aspoň na ty první čtyři příklady - co jsou za víc bodů (zbytek - 16 testových otázek).
+
+1. zadán program v asembleru - práce s A/D převodníkem, najít chybu, pokud tam nějaká je (dle mého názoru se tam testovat špatný bit - 5., měl by to být 7. - "coco" bit, příznak, že převod je hotovej).
+
+2. spočítat přenosovou rychlost v jednotkách Bd. Zadána doba přenosu a počet bytů. A zmínka o tom, že v rámci jsou jen "nejnutnější" datové a řídící bity (takže odhaduju, že velikost rámce bude 10 bitů - 1x start bit + 8x data bit + 1x stop bit).
+
+3. příklad na PWM. Zadána vstupní frekvence, požadovaná frekvence a střída (v %). Jaké hodnoty dát do registrů TPMMOD a TPMCxV.
+
+4. klasika - zadán konec paměti (jednotlivé byty), zjistit, jaká adresa se použije po resetu (poslední dva byty) a po SWI přerušení (3. a 4. byte od konce).
+

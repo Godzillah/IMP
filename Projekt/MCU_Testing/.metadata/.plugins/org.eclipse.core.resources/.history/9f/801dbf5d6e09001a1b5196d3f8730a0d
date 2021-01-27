@@ -1,0 +1,16 @@
+#include "testUtils.h"
+
+void help() {
+	printf("\rPlease choose type of test from the following list:");
+	printf("\r\n\t Type -> 1 - RTC test with incrementing tar register");
+	printf("\r\n\t Type -> 2 - RTC test with overflow tar register");
+	printf("\r\n\t Type -> 3 - MCU buttocns test");
+	printf("\r\n\t Type -> 4 - CRC cards test with 16-bit");
+	printf("\r\n\t Type -> 5 - CRC cards test with 32-bit");
+	printf("\r\n\t Type -> 6 - LED + beep test");
+	printf("\r\n\t Type -> 7 - Watchdog deadlock test\n");
+}
+
+int assertEqualsInt(int excepted, int actual) {
+	return excepted == actual ? 0 : -1;
+}

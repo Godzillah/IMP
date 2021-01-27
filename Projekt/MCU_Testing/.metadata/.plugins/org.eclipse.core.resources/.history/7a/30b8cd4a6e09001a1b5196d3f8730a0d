@@ -1,0 +1,13 @@
+/*
+ * testUtils.h
+ *
+ *  Created on: 17.11.2019
+ *      Author: majkl
+ */
+
+#ifndef SOURCES_TESTUTILS_H_
+#define SOURCES_TESTUTILS_H_
+
+int assertEqualsInt(int excepted, int actual);
+
+#endif /* SOURCES_TESTUTILS_H_ */

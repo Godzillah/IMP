@@ -1,0 +1,15 @@
+17:58:15 **** Incremental Build of configuration Debug for project LaboratornyFITKIT ****
+make all 
+Building file: ../Sources/main.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections  -g3 -I"../Sources" -I"../Includes" -std=c99 -MMD -MP -MF"Sources/main.d" -MT"Sources/main.o" -c -o "Sources/main.o" "../Sources/main.c"
+../Sources/main.c: In function 'main':
+../Sources/main.c:38:2: error: 'LED_R_MASK' undeclared (first use in this function)
+  LED_R_MASK;
+  ^
+../Sources/main.c:38:2: note: each undeclared identifier is reported only once for each function it appears in
+Sources/subdir.mk:18: recipe for target 'Sources/main.o' failed
+make: *** [Sources/main.o] Error 1
+
+17:58:16 Build Finished (took 344ms)
+

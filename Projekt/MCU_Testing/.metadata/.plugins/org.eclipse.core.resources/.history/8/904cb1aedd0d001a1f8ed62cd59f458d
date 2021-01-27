@@ -1,0 +1,115 @@
+/**
+ * author  : Maroš Orsák (xorsak02)
+ * file	   : crc.c
+ * created : 20.11.2019
+ */
+
+#include "crc.h"
+
+/*
+ * Retrieved from http://cache.freescale.com/files/microcontrollers/doc/ref_manual/K60P120M100SF2RM.pdf
+ * To compute a 16-bit CRC:
+		1. Clear CTRL[TCRC] to enable 16-bit CRC mode.
+		2. Program the transpose and complement options in the CTRL register as required for
+		the CRC calculation. See Transpose feature and CRC result complement for details.
+		3. Write a 16-bit polynomial to the GPOLY[LOW] field. The GPOLY[HIGH] field is
+		not usable in 16-bit CRC mode.
+		4. Set CTRL[WAS] to program the seed value.
+		5. Write a 16-bit seed to CRC[LU:LL]. CRC[HU:HL] are not used.
+		6. Clear CTRL[WAS] to start writing data values.
+		7. Write data values into CRC[HU:HL:LU:LL]. A CRC is computed on every data
+		value write, and the intermediate CRC result is stored back into CRC[LU:LL].
+		8. When all values have been written, read the final CRC result from CRC[LU:LL].
+
+	1) with seed zero value
+	2) ReflectIn in false -> reversing input
+	3) ReflecOut in false -> reversing output
+	4) complement out -> false
+ */
+
+void calc16CRCByHardware(uint32_t data, uint32_t polynomial_number) {
+	// enable CRC module
+	SIM_SCGC6 |= SIM_SCGC6_CRC_MASK;
+
+	// set CRC_CTRL for 16-bit CRC computation
+	CRC_BASE_PTR->CTRL &= ~CRC_CTRL_TCRC_MASK;
+
+	printf("\r[INFO] - Polynomial will be set to value:%ld\n", polynomial_number);
+	CRC_BASE_PTR->GPOLY_ACCESS16BIT.GPOLYL = polynomial_number;
+	printf("\r[INFO] - Polynomial number is:%ld\n", CRC_BASE_PTR->GPOLY_ACCESS16BIT.GPOLYL );
+
+	// configure CRC_CTR low register for seed value
+	CRC_BASE_PTR->CTRL |= (CRC_CTRL_WAS_MASK);
+
+
+	// init value to CRC with all zeros also known as seed
+	CRC_BASE_PTR->ACCESS16BIT.CRCL = 0x0000u;
+
+	// invert bit to start be able write data
+	CRC_BASE_PTR->CTRL &= (~CRC_CTRL_WAS_MASK);
+
+	// fill data to CRC data register
+	CRC_BASE_PTR->CRC = data;
+
+	/* Output complement of remainder */
+	printf("CRC checksum:\t%X\n", (uint16_t) CRC_BASE_PTR->ACCESS16BIT.CRCL);
+}
+
+void calc16CRCByHardwareExample() {
+	calc16CRCByHardware(0x12345678, 0x1021);
+
+	printf("\r\Receiver with same data...\n");
+	calc16CRCByHardware(0x12345678, 0x1021);
+
+	printf("\r\nReceiver with bad data...\n");
+	calc16CRCByHardware(0x12345628, 0x1021);
+
+	printf("\r\nReceiver with same data but bad polynomial number...\n");
+	calc16CRCByHardware(0x12345678, 0x1020);
+}
+
+void calc32CRCByHardware(uint32_t data, uint32_t polynomial_number) {
+	// enable CRC module
+	SIM_SCGC6 |= SIM_SCGC6_CRC_MASK;
+
+	printf("\r[IMPORTANT] - before TCRC flag to enable 32-bit is:%i\n", CRC_BASE_PTR->CTRL & CRC_CTRL_TCRC_MASK);
+
+	/* Configure CRC_CTRL for 32-bit*/
+	CRC_BASE_PTR->CTRL    |=    CRC_CTRL_TCRC_MASK;
+
+	printf("\r[IMPORTANT] - after TCRC flag to enable 32-bit is:%i\n", CRC_BASE_PTR->CTRL & CRC_CTRL_TCRC_MASK);
+
+	printf("\r[INFO] - Polynomial will be set to value:%ld\n", polynomial_number);
+	CRC_BASE_PTR->GPOLY    =    polynomial_number;
+	printf("\r[INFO] - Polynomial number is:%ld\n", CRC_BASE_PTR->GPOLY );
+
+	/* Configure CRC_CTRL for seed */
+	CRC_BASE_PTR->CTRL    |=     (CRC_CTRL_WAS_MASK);
+
+	/* Seed CRC with all ones */
+	CRC_BASE_PTR->CRC    =    0x00000000u;
+
+	/* Clear seed bit to start writing data values */
+	CRC_BASE_PTR->CTRL    &=     (~CRC_CTRL_WAS_MASK);
+
+	/* Write data to CRC data register */
+	CRC_BASE_PTR->CRC                =    data;        /* Data */
+
+	/* Output complement of remainder */
+	printf("CRC checksum:\t%X   \n", CRC_BASE_PTR->CRC);
+}
+
+void calc32CRCByHardwareExample() {
+	calc16CRCByHardware(0x12345678, 0x1021);
+
+	printf("\r\Receiver with same data...\n");
+	calc16CRCByHardware(0x12345678, 0x1021);
+
+	printf("\r\nReceiver with bad data...\n");
+	calc16CRCByHardware(0x12345628, 0x1021);
+
+	printf("\r\nReceiver with same data but bad polynomial number...\n");
+	calc16CRCByHardware(0x12345678, 0x1020);
+}
+
+

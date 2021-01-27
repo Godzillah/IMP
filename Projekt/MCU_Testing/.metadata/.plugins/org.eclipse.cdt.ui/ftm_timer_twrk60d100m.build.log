@@ -1,0 +1,15 @@
+19:20:34 **** Incremental Build of configuration debug for project ftm_timer_twrk60d100m ****
+make -k -j4 all 
+Building file: ../source/main.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -ffreestanding -fno-builtin -Wall  -g -DDEBUG -DCPU_MK60DN512VMD10 -DTWR_K60D100M -DTOWER -I../../../../../../../CMSIS/Include -I../../../../../../../devices -I../.. -I../../../../.. -I../../../../../../../devices/MK60D10/drivers -I../../../../../../../devices/MK60D10/utilities -I../../../../../../../devices/MK60D10 -std=gnu99 -mapcs -MMD -MP -MF"source/main.d" -MT"source/main.o" -c -o "source/main.o" "../source/main.c"
+Finished building: ../source/main.c
+ 
+Building target: ftm_timer_twrk60d100m.elf
+Invoking: Cross ARM C++ Linker
+arm-none-eabi-g++ -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -ffreestanding -fno-builtin -Wall  -g -T ../settings/MK60DN512xxx10_flash.ld -Xlinker --gc-sections -Wl,-Map,"ftm_timer_twrk60d100m.map" --specs=nano.specs -mapcs  -Xlinker -static  -Xlinker -z  -Xlinker muldefs -o "ftm_timer_twrk60d100m.elf" -Xlinker --start-group  ./utilities/fsl_debug_console.o  ./startup/startup_MK60D10.o ./startup/system_MK60D10.o  ./source/libs/crc.o ./source/libs/gpio.o ./source/libs/io.o ./source/libs/mcg.o ./source/libs/printf.o ./source/libs/uart.o  ./source/main.o ./source/rtc.o ./source/testUtils.o  ./drivers/fsl_clock.o ./drivers/fsl_common.o ./drivers/fsl_flash.o ./drivers/fsl_ftm.o ./drivers/fsl_gpio.o ./drivers/fsl_smc.o ./drivers/fsl_uart.o  ./board/board.o ./board/clock_config.o ./board/pin_mux.o   -lm -lg -lgcc -lnosys -Xlinker --end-group
+Finished building target: ftm_timer_twrk60d100m.elf
+ 
+
+19:20:35 Build Finished (took 890ms)
+

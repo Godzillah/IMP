@@ -1,0 +1,18 @@
+/**
+ * author: unknown
+ */
+
+#ifndef SOURCES_CRC_H_
+#define SOURCES_CRC_H_
+
+#include "MK60D10.h"
+#include "io.h"
+
+#define CRC16_POLY 0x8005
+#define CRC_INIT 0xFFFF
+
+uint16_t culCalcCRCBySofware(uint8_t crcData, uint16_t crcReg);
+//void calc32CRCByHardware();
+
+
+#endif /* SOURCES_CRC_H_ */
